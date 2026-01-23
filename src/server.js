@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import http from "http";
-import app from "./app.js";
+import http from "node:http";
+import {app} from "./app.js";
 
 dotenv.config();
 
@@ -12,7 +12,6 @@ server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// корректное завершение
 function shutdown(signal) {
   console.log(`Received ${signal}. Shutting down...`);
   server.close(() => {
