@@ -8,7 +8,9 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:coverage": "npm run test -- --coverage",
     "lint": "eslint src tests",
-    "lint:fix": "eslint src tests --fix"
+    "lint:fix": "eslint src tests --fix",
+    "test:watch": "npm run test -- --watch"
+    
   },
   "keywords": [],
   "author": "",
