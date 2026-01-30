@@ -13,8 +13,13 @@ describe("Functional tests", () => {
   })
 
   describe("Error handling", () => {
-    it("should return 404 if path not exists", () => {
-      
+    it("should return 404 if path not exists", async () => {
+
+      const res = await request(app).get("/notExistingRoute");
+
+      expect(res.status).toBe(404);
+      expect(res.body).toHaveProperty("error");
+
     })
   })
 })
