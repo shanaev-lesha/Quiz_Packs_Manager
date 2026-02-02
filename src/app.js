@@ -1,4 +1,6 @@
 import express from "express";
+import knex from '../knex.js';
+import bcrypt from 'bcrypt';
 
 class AppError extends Error {
   constructor(message, status = 500) {
@@ -17,6 +19,31 @@ app.use((req, res, next) => {
   next();
 });
 
+app.post("/register", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      throw new AppError('требуется адрес электронной почты и пароль', 400);
+    }
+
+    const existing = await knex('users').where({ email }).first();
+    if (existing) {
+      throw new AppError('эта электронная почта уже существует', 409);
+    }
+
+    const password_hash = await bcrypt.hash(password, 10);
+
+    const [user] = await knex('users')
+      .insert({ email, password_hash })
+      .returning(['id', 'email', 'created_at']);
+
+    res.status(201).json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.get("/health", (req, res) => {
   res.status(200).send();
 });
@@ -24,8 +51,6 @@ app.get("/health", (req, res) => {
 app.use((req, res, next) => {
   next(new AppError('такой страницы не существует', 404));
 });
-
-// TODO create controller for throwing errors
 
 app.use((err, req, res, next) => {
   if (res.headersSent) {
