@@ -1,6 +1,6 @@
 import express from "express";
-import knex from '../knex.js';
-import bcrypt from 'bcrypt';
+import usersRouter from './resources/users/router.js';
+
 
 class AppError extends Error {
   constructor(message, status = 500) {
@@ -19,30 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/register", async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      throw new AppError('требуется адрес электронной почты и пароль', 400);
-    }
-
-    const existing = await knex('users').where({ email }).first();
-    if (existing) {
-      throw new AppError('эта электронная почта уже существует', 409);
-    }
-
-    const password_hash = await bcrypt.hash(password, 10);
-
-    const [user] = await knex('users')
-      .insert({ email, password_hash })
-      .returning(['id', 'email', 'created_at']);
-
-    res.status(201).json(user);
-  } catch (err) {
-    next(err);
-  }
-});
+app.use('/auth', usersRouter);
 
 app.get("/health", (req, res) => {
   res.status(200).send();
