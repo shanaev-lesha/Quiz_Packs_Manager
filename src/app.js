@@ -1,5 +1,7 @@
 import express from "express";
 import usersRouter from './resources/users/router.js';
+import authRouter from "./resources/auth/router.js";
+import passport from "./resources/auth/passport.js";
 
 
 class AppError extends Error {
@@ -19,7 +21,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/auth', usersRouter);
+app.use(passport.initialize());
+
+app.use("/auth", authRouter);
+app.use("/users", usersRouter);
 
 app.get("/health", (req, res) => {
   res.status(200).send();
@@ -39,3 +44,5 @@ app.use((err, req, res, next) => {
 });
 
 export default app;
+
+

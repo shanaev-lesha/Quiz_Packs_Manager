@@ -1,14 +1,10 @@
-import usersService from './service.js';
-
-class AuthController {
-    async register(req, res, next) {
-        try {
-            const user = await usersService.register(req.body);
-            res.status(201).json(user);
-        } catch (err) {
-            next(err);
-        }
+class UsersController {
+    async list(req, res) {
+        res.json({ message: "Список пользователей" });
     }
 }
 
-export default new AuthController();
+export default new UsersController();
+
+
+

@@ -5,6 +5,10 @@ class UsersRepository {
         return db('users').where({ email }).first();
     }
 
+    findById(id) {
+        return db('users').where({ id }).first();
+    }
+
     async create({ email, password_hash }) {
         const [user] = await db('users')
             .insert({ email, password_hash })
@@ -14,3 +18,7 @@ class UsersRepository {
 }
 
 export default new UsersRepository();
+
+
+
+
