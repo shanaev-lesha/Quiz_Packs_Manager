@@ -1,4 +1,6 @@
 import express from "express";
+import usersRouter from './resources/users/router.js';
+
 
 class AppError extends Error {
   constructor(message, status = 500) {
@@ -17,6 +19,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/auth', usersRouter);
+
 app.get("/health", (req, res) => {
   res.status(200).send();
 });
@@ -24,8 +28,6 @@ app.get("/health", (req, res) => {
 app.use((req, res, next) => {
   next(new AppError('такой страницы не существует', 404));
 });
-
-// TODO create controller for throwing errors
 
 app.use((err, req, res, next) => {
   if (res.headersSent) {
