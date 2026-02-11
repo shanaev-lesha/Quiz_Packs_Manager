@@ -1,23 +1,20 @@
 import db from '../../knex.js';
 
-class UsersRepository {
-    findByEmail(email) {
-        return db('users').where({ email }).first();
-    }
 
-    findById(id) {
-        return db('users').where({ id }).first();
-    }
-
-    async create({ email, password_hash }) {
-        const [user] = await db('users')
-            .insert({ email, password_hash })
-            .returning(['id', 'email', 'created_at']);
-        return user;
-    }
+export function findByEmail(email) {
+    return db('users').where({ email }).first();
 }
 
-export default new UsersRepository();
+export function findById(id) {
+    return db('users').where({ id }).first();
+}
+
+export async function create({ email, password_hash }) {
+    const [user] = await db('users')
+        .insert({ email, password_hash })
+        .returning(['id', 'email', 'created_at']);
+    return user;
+}
 
 
 
