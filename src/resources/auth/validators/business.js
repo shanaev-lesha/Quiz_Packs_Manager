@@ -1,11 +1,11 @@
 import Joi from "joi";
 import { AppError } from "../../../common/appError.js";
 
-const emailSchema = Joi.string()
-    .email({ tlds: { allow: false } })
-    .max(254);
-
 export function validateEmailFormat(email) {
+    const emailSchema = Joi.string()
+        .email({ tlds: { allow: false } })
+        .max(254);
+
     const { error } = emailSchema.validate(email);
     if (error) {
         throw new AppError("некорректный формат email", 400);
