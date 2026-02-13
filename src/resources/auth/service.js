@@ -1,35 +1,12 @@
 import bcrypt from "bcrypt";
 import * as usersRepository from "../../repositories/users.js";
-import { AppError } from "../../middlewares/errorHandler.js";
+import { AppError } from "../../common/appError.js";
+import { validateEmailFormat, validatePasswordComplexity, } from "./validators/business.js";
 
 export async function register({ email, password }) {
-    if (!email || !password) {
-        throw new AppError("требуется адрес электронной почты и пароль", 400);
-    }
 
-    if (typeof password !== "string") {
-        throw new AppError("пароль должен быть строкой", 400);
-    }
-
-    if (password.length < 4) {
-        throw new AppError("пароль должен быть не короче 4 символов", 400);
-    }
-
-    if (password.length > 64) {
-        throw new AppError("пароль должен быть не длиннее 64 символов", 400);
-    }
-
-    if (/\s/.test(password)) {
-        throw new AppError("пароль не должен содержать пробелы", 400);
-    }
-
-    if (!/[a-zA-Z]/.test(password)) {
-        throw new AppError("пароль должен содержать хотя бы одну букву", 400);
-    }
-
-    if (!/\d/.test(password)) {
-        throw new AppError("пароль должен содержать хотя бы одну цифру", 400);
-    }
+    validateEmailFormat(email);
+    validatePasswordComplexity(password);
 
     const existing = await usersRepository.findByEmail(email);
     if (existing) {
@@ -42,13 +19,11 @@ export async function register({ email, password }) {
 }
 
 export async function validateUser(email, password) {
-    if (!email || !password) {
-        throw new AppError("требуется адрес электронной почты и пароль", 400);
-    }
+    validateEmailFormat(email);
 
     const user = await usersRepository.findByEmail(email);
     if (!user) {
-        throw new AppError("пользователь с таким email не найден", 404)
+        throw new AppError("пользователь с таким email не найден", 404);
     }
 
     const isValid = await bcrypt.compare(password, user.password_hash);

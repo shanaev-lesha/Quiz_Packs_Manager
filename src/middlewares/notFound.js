@@ -1,4 +1,4 @@
-import { AppError } from "../middlewares/errorHandler.js";
+import { AppError } from "../common/appError.js";
 
 
 export default function notFound(req, res, next) {

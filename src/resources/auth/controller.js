@@ -15,9 +15,6 @@ export async function login(req, res, next) {
         const { email, password } = req.body;
 
         const user = await validateUser(email, password);
-        if (!user) {
-            return res.status(401).json({ error: "Неверные учетные данные" });
-        }
 
         const token = jwt.sign(
             { id: user.id },
