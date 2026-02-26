@@ -10,8 +10,9 @@
     "lint": "eslint src tests",
     "lint:fix": "eslint src tests --fix",
     "test:watch": "npm run test -- --watch",
+    "poc": "knex migrate:latest --help",
     "migrate": "knex migrate:latest",
-    "migrate:rollback": "knex migrate:rollback"
+    "migrate:rollback": "npx knex migrate:rollback"
   },
   "keywords": [],
   "author": "",
