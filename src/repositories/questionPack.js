@@ -1,4 +1,4 @@
-const knex = require('../knex.js');
+import knex from '../knex.js';
 
 const TABLE_NAME = 'question_packs';
 
@@ -36,10 +36,10 @@ async function remove(id) {
         .del();
 }
 
-module.exports = {
+export {
     create,
     findById,
     findAllByUserId,
     update,
     remove
-};
+}

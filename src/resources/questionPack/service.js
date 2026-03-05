@@ -1,5 +1,5 @@
-const repository = require('../../repositories/questionPack.js');
-const { AppError } = require("../../common/appError.js");
+import * as repository from '../../repositories/questionPack.js';
+import { AppError } from "../../common/appError.js";
 
 async function createPack(userId, data) {
     return repository.create({
@@ -54,7 +54,7 @@ async function deletePack(userId, packId) {
     await repository.remove(packId);
 }
 
-module.exports = {
+export {
     createPack,
     getUserPacks,
     getPackById,
