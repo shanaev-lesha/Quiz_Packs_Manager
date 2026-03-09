@@ -15,7 +15,7 @@ app.use(loggerMiddleware);
 
 app.use(passport.initialize());
 
-app.use("/authaa", authRouter);
+app.use("/auth", authRouter);
 
 app.use(healthRouter);
 
