@@ -1,4 +1,4 @@
-import db from '../../knex.js';
+import db from '../../src/knex.js';
 
 
 export function findByEmail(email) {
