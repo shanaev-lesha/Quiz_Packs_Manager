@@ -27,29 +27,15 @@ async function getPackById(userId, packId) {
 }
 
 async function updatePack(userId, packId, data) {
-    const pack = await repository.findById(packId);
 
-    if (!pack) {
-        throw new AppError('Pack not found', 404);
-    }
-
-    if (pack.user_id !== userId) {
-        throw new AppError('Forbidden', 403);
-    }
+    await getPackById(userId, packId);
 
     return repository.update(packId, data);
 }
 
 async function deletePack(userId, packId) {
-    const pack = await repository.findById(packId);
 
-    if (!pack) {
-        throw new AppError('Pack not found', 404);
-    }
-
-    if (pack.user_id !== userId) {
-        throw new AppError('Forbidden', 403);
-    }
+    await getPackById(userId, packId);
 
     await repository.remove(packId);
 }
