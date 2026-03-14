@@ -5,13 +5,13 @@ const router = Router();
 
 
 router.get("/health", healthCheck
-    /*
-  #swagger.tags = ['Health']
-  #swagger.summary = 'Проверка состояния сервера'
-  #swagger.responses[200] = {
-    description: 'Endpoint проверяет работает ли сервер'
-  }
-*/
+  /*
+    #swagger.tags = ['Health']
+    #swagger.summary = 'Проверка состояния сервера'
+    #swagger.responses[200] = {
+      description: 'Endpoint проверяет работает ли сервер'
+    }
+  */
 );
 
 

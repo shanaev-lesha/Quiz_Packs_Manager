@@ -1,12 +1,12 @@
-const knex = require('../knex.js');
+import knex from "../knex.js";
 
-const TABLE_NAME = 'question_packs';
+const TABLE_NAME = "question_packs";
 
 class QuestionPackRepository {
     async create(data) {
         const [pack] = await knex(TABLE_NAME)
             .insert(data)
-            .returning('*');
+            .returning("*");
 
         return pack;
     }
@@ -26,7 +26,7 @@ class QuestionPackRepository {
         const [updated] = await knex(TABLE_NAME)
             .where({ id })
             .update(data)
-            .returning('*');
+            .returning("*");
 
         return updated;
     }
@@ -38,4 +38,4 @@ class QuestionPackRepository {
     }
 }
 
-module.exports = new QuestionPackRepository();
+export default new QuestionPackRepository();
