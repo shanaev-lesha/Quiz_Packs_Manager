@@ -1,41 +1,41 @@
-import knex from "../knex.js";
+import knex from '../knex.js';
 
-const TABLE_NAME = "question_packs";
+const TABLE_NAME = 'question_packs';
 
 class QuestionPackRepository {
-    async create(data) {
-        const [pack] = await knex(TABLE_NAME)
-            .insert(data)
-            .returning("*");
+  async create(data) {
+    const [pack] = await knex(TABLE_NAME)
+      .insert(data)
+      .returning('*');
 
-        return pack;
-    }
+    return pack;
+  }
 
-    async findById(id) {
-        return knex(TABLE_NAME)
-            .where({ id })
-            .first();
-    }
+  async findById(id) {
+    return knex(TABLE_NAME)
+      .where({ id })
+      .first();
+  }
 
-    async findAllByUserId(userId) {
-        return knex(TABLE_NAME)
-            .where({ user_id: userId });
-    }
+  async findAllByUserId(userId) {
+    return knex(TABLE_NAME)
+      .where({ user_id: userId });
+  }
 
-    async update(id, data) {
-        const [updated] = await knex(TABLE_NAME)
-            .where({ id })
-            .update(data)
-            .returning("*");
+  async update(id, data) {
+    const [updated] = await knex(TABLE_NAME)
+      .where({ id })
+      .update(data)
+      .returning('*');
 
-        return updated;
-    }
+    return updated;
+  }
 
-    async delete(id) {
-        return knex(TABLE_NAME)
-            .where({ id })
-            .del();
-    }
+  async delete(id) {
+    return knex(TABLE_NAME)
+      .where({ id })
+      .del();
+  }
 }
 
 export default new QuestionPackRepository();
