@@ -1,7 +1,7 @@
 import { AppError } from '../common/appError.js';
 
 export function validateBody(schema) {
-  return (req, res, next) => {
+  return (req, _res, next) => {
     const { error, value } = schema.validate(req.body);
     if (error) {
       return next(new AppError('некорректное тело запроса', 400));
