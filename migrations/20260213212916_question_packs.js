@@ -2,7 +2,7 @@
 export async function up(knex) {
 
     await knex.schema.createTable("question_packs", (table) => {
-        table.uuid("id").primary();
+        table.uuid("id").primary().defaultTo(knex.raw("gen_random_uuid()"));
 
         table
             .uuid("user_id")

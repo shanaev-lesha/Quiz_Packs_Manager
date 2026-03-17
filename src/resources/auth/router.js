@@ -61,7 +61,10 @@ router.get(
         "bearerAuth": []
       }]
       #swagger.responses[200] = {
-        description: "Данные пользователя"
+        description: "Данные пользователя",
+        schema: {
+          user: { $ref: "#/definitions/User" }
+        }
       }
       #swagger.responses[401] = {
         description: "Не авторизован"

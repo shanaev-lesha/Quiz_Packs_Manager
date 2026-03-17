@@ -15,7 +15,7 @@
       "type": "apiKey",
       "name": "Authorization",
       "in": "header",
-      "description": "Введите: Bearer <JWT>"
+      "description": "Bearer <JWT>"
     }
   },
   "paths": {
@@ -82,7 +82,18 @@
         "description": "",
         "responses": {
           "200": {
-            "description": "Данные пользователя"
+            "description": "Данные пользователя",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/User"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
             "description": "Не авторизован"
@@ -108,254 +119,66 @@
           }
         }
       }
-    },
-    "/register": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Регистрация пользователя",
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/RegisterBody"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Пользователь создан",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        }
-      }
-    },
-    "/login": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Авторизация",
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/LoginBody"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "JWT токен",
-            "schema": {
-              "$ref": "#/definitions/Token"
-            }
-          }
-        }
-      }
-    },
-    "/me": {
-      "get": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Текущий пользователь",
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "Данные пользователя"
-          },
-          "401": {
-            "description": "Не авторизован"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
     }
   },
   "definitions": {
     "RegisterBody": {
       "type": "object",
       "properties": {
-        "type": {
+        "email": {
           "type": "string",
-          "example": "object"
+          "example": "test@test.com"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            },
-            "password": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            }
-          }
-        },
-        "required": {
-          "type": "array",
-          "example": [
-            "email",
-            "password"
-          ],
-          "items": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": {
-          "type": "boolean",
-          "example": false
+        "password": {
+          "type": "string",
+          "example": "Password1"
         }
-      }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
     },
     "LoginBody": {
       "type": "object",
       "properties": {
-        "type": {
+        "email": {
           "type": "string",
-          "example": "object"
+          "example": "test@test.com"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            },
-            "password": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                }
-              }
-            }
-          }
-        },
-        "required": {
-          "type": "array",
-          "example": [
-            "email",
-            "password"
-          ],
-          "items": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": {
-          "type": "boolean",
-          "example": false
+        "password": {
+          "type": "string",
+          "example": "Password1"
         }
-      }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
     },
     "User": {
       "type": "object",
       "properties": {
-        "type": {
+        "id": {
           "type": "string",
-          "example": "object"
+          "example": "uuid"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "uuid"
-                }
-              }
-            },
-            "email": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "user@mail.com"
-                }
-              }
-            },
-            "created_at": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "2026-01-01T10:00:00Z"
-                }
-              }
-            }
-          }
+        "email": {
+          "type": "string",
+          "example": "user@mail.com"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2026-01-01T10:00:00Z"
         }
       }
     },
     "Token": {
       "type": "object",
       "properties": {
-        "type": {
+        "token": {
           "type": "string",
-          "example": "object"
-        },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "token": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "jwt.token.here"
-                }
-              }
-            }
-          }
+          "example": "jwt.token.here"
         }
       }
     }
