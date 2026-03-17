@@ -1,4 +1,4 @@
 export default function logger(_req, _res, next) {
-  console.log('запрос получен');
+  console.warn('запрос получен');
   next();
 }

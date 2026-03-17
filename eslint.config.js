@@ -9,7 +9,8 @@ export default [
       'coverage/**',
       '.git/**',
       '*.log',
-      'package-lock.json'
+      'package-lock.json',
+      'migrations/**'
     ]
   },
 
