@@ -1,10 +1,10 @@
-import passport from "passport";
-import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
-import * as usersRepository from "../../repositories/users.js";
+import passport from 'passport';
+import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import * as usersRepository from '../../repositories/users.js';
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_SECRET,
+  secretOrKey: process.env.JWT_SECRET
 };
 
 passport.use(
