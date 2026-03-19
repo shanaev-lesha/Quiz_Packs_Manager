@@ -12,7 +12,7 @@ import fs from 'node:fs';
 const app = express();
 
 const swaggerFile = JSON.parse(
-    fs.readFileSync(new URL('../swagger_output.json', import.meta.url))
+  fs.readFileSync(new URL('../swagger/swagger_output.json', import.meta.url))
 );
 
 app.use(express.json());

@@ -10,7 +10,8 @@ export default [
       '.git/**',
       '*.log',
       'package-lock.json',
-      'migrations/**'
+      'migrations/**',
+      'swagger/**'
     ]
   },
 
