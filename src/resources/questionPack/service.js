@@ -37,7 +37,7 @@ async function deletePack(userId, packId) {
 
   await getPackById(userId, packId);
 
-  await repository.remove(packId);
+  await repository.delete(packId);
 }
 
 export {
