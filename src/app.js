@@ -7,6 +7,7 @@ import { errorHandler as errorHandlerMiddleware } from './middlewares/errorHandl
 import loggerMiddleware from './middlewares/logger.js';
 import swaggerUi from 'swagger-ui-express';
 import fs from 'node:fs';
+import questionPackRouter from './resources/questionPack/router.js';
 
 
 const app = express();
@@ -22,6 +23,8 @@ app.use(loggerMiddleware);
 app.use(passport.initialize());
 
 app.use('/auth', authRouter);
+
+app.use('/question-packs', questionPackRouter);
 
 app.use(healthRouter);
 
