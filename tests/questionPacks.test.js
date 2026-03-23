@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
 
-// ===== MOCK FUNCTIONS =====
+
 const mockReturning = jest.fn();
 const mockDel = jest.fn();
 const mockFirst = jest.fn();
@@ -9,7 +9,7 @@ const mockInsert = jest.fn();
 const mockWhere = jest.fn();
 const mockKnex = jest.fn();
 
-// ===== SETUP CHAIN MOCKS =====
+
 function setupChains() {
   mockInsert.mockReturnValue({ returning: mockReturning });
   mockUpdate.mockReturnValue({ returning: mockReturning });
@@ -26,7 +26,7 @@ function setupChains() {
   });
 }
 
-// ===== MOCK KNEX MODULE =====
+
 jest.unstable_mockModule('../src/knex.js', () => ({
   default: mockKnex
 }));

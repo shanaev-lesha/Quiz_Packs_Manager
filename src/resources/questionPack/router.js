@@ -1,12 +1,18 @@
 import { Router } from 'express';
 import * as controller from './controller.js';
 import { authMiddleware } from '../../middlewares/authMiddleware.js';
+import { validateBody } from '../../middlewares/validateBody.js';
+import { createPackSchema } from './validators/httpSchemas.js';
 
 const router = Router();
 
 router.use(authMiddleware);
 
-router.post('/', controller.create);
+router.post(
+  '/',
+  validateBody(createPackSchema),
+  controller.create
+);
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);
 router.put('/:id', controller.update);
