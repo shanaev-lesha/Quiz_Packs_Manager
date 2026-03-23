@@ -21,37 +21,57 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Регистрация пользователя",
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/RegisterBody"
-            }
-          }
-        ],
         "responses": {
           "201": {
-            "description": "Пользователь создан",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
+            "description": "Created"
           }
         }
       }
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
         ],
-        "summary": "Авторизация",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/question-packs/": {
+      "post": {
+        "tags": [
+          "Question Packs"
+        ],
+        "summary": "Создать пак вопросов",
         "description": "",
         "parameters": [
           {
@@ -59,44 +79,138 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/LoginBody"
+              "$ref": "#/definitions/CreateQuestionPackRequest"
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "JWT токен",
+          "201": {
+            "description": "Пак создан",
             "schema": {
-              "$ref": "#/definitions/Token"
+              "$ref": "#/definitions/QuestionPack"
             }
+          },
+          "401": {
+            "description": "Не авторизован"
           }
-        }
-      }
-    },
-    "/auth/me": {
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
       "get": {
         "tags": [
-          "Auth"
+          "Question Packs"
         ],
-        "summary": "Текущий пользователь",
+        "summary": "Получить все паки пользователя",
         "description": "",
         "responses": {
           "200": {
-            "description": "Данные пользователя",
+            "description": "Список паков",
             "schema": {
-              "type": "object",
-              "properties": {
-                "user": {
-                  "$ref": "#/definitions/User"
-                }
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/QuestionPack"
               },
               "xml": {
                 "name": "main"
               }
             }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/question-packs/{id}": {
+      "get": {
+        "tags": [
+          "Question Packs"
+        ],
+        "summary": "Получить пак по ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Пак",
+            "schema": {
+              "$ref": "#/definitions/QuestionPack"
+            }
           },
-          "401": {
-            "description": "Не авторизован"
+          "404": {
+            "description": "Не найден"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Question Packs"
+        ],
+        "summary": "Обновить пак",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateQuestionPackRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Обновлённый пак",
+            "schema": {
+              "$ref": "#/definitions/QuestionPack"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Question Packs"
+        ],
+        "summary": "Удалить пак",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Удалено"
           }
         },
         "security": [
@@ -179,6 +293,76 @@
         "token": {
           "type": "string",
           "example": "jwt.token.here"
+        }
+      }
+    },
+    "QuestionPack": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid"
+        },
+        "user_id": {
+          "type": "string",
+          "example": "uuid"
+        },
+        "title": {
+          "type": "string",
+          "example": "Название пака"
+        },
+        "description": {
+          "type": "string",
+          "example": "Описание"
+        },
+        "status": {
+          "type": "string",
+          "example": "draft"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2026-01-01T10:00:00Z"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2026-01-01T10:00:00Z"
+        }
+      }
+    },
+    "CreateQuestionPackRequest": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "My pack"
+        },
+        "description": {
+          "type": "string",
+          "example": "Описание"
+        },
+        "status": {
+          "type": "string",
+          "example": "draft"
+        }
+      },
+      "required": [
+        "title"
+      ]
+    },
+    "UpdateQuestionPackRequest": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Updated title"
+        },
+        "description": {
+          "type": "string",
+          "example": "Новое описание"
+        },
+        "status": {
+          "type": "string",
+          "example": "published"
         }
       }
     }
