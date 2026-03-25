@@ -4,6 +4,7 @@ export function errorHandler(err, _req, res, next) {
   }
 
   res.status(err.status || 500).json({
-    error: err.message || 'Server error'
+    error: err.message || 'Server error',
+    ...(err.details && { details: err.details })
   });
 }
