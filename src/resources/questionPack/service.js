@@ -33,11 +33,11 @@ async function updatePack(userId, packId, data) {
   return repository.update(packId, data);
 }
 
-async function deletePack(userId, packId) {
+async function remove(userId, packId) {
 
   await getPackById(userId, packId);
 
-  await repository.delete(packId);
+  await repository.remove(packId);
 }
 
 export {
@@ -45,5 +45,5 @@ export {
   getUserPacks,
   getPackById,
   updatePack,
-  deletePack
+  remove
 };

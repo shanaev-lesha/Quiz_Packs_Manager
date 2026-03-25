@@ -21,49 +21,89 @@
   "paths": {
     "/auth/register": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Регистрация пользователя",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterBody"
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Пользователь создан",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           }
         }
       }
     },
     "/auth/login": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Авторизация",
         "description": "",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/LoginBody"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "JWT токен",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
           }
         }
       }
     },
     "/auth/me": {
       "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Текущий пользователь",
         "description": "",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Данные пользователя",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/User"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Не авторизован"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/question-packs/": {

@@ -42,7 +42,7 @@ export async function update(req, res, next) {
 
 export async function remove(req, res, next) {
   try {
-    await service.deletePack(req.user.id, req.params.id);
+    await service.remove(req.user.id, req.params.id);
     res.status(204).send();
   } catch (e) {
     next(e);
